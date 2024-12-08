@@ -66,14 +66,13 @@ class Post(models.Model):
         Location,
         verbose_name='Местоположение',
         null=True,
-        blank=False,
+        blank=True,
         on_delete=models.SET_NULL
     )
     category = models.ForeignKey(
         Category,
         verbose_name='Категория',
         null=True,
-        blank=True,
         on_delete=models.SET_NULL
     )
     is_published = models.BooleanField(
