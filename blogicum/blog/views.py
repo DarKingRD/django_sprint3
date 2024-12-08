@@ -3,16 +3,18 @@ from django.http import Http404
 from django.utils import timezone
 from .models import Post, Category
 
+
 # Главная страница
 def index(request):
     post_list = Post.objects.filter(
         pub_date__lte=timezone.now(),
         is_published=True,
         category__is_published=True
-    ).order_by('-pub_date')[:5]    
+    ).order_by('-pub_date')[:5]
 
     context = {'post_list': post_list}
     return render(request, 'blog/index.html', context)
+
 
 # Страница отдельной публикации
 def post_detail(request, id):
@@ -26,9 +28,14 @@ def post_detail(request, id):
     context = {'post': post}
     return render(request, 'blog/detail.html', context)
 
+
 # Страница категории
 def category_posts(request, category_slug):
-    category = get_object_or_404(Category, slug=category_slug, is_published=True)
+    category = get_object_or_404(
+        Category,
+        slug=category_slug,
+        is_published=True
+    )
 
     post_list = Post.objects.filter(
         category=category,
